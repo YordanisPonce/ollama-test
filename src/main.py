@@ -1,5 +1,6 @@
 import openai
 import PyPDF2
+import json
 
 def leer_pdf(ruta_pdf):
     try:
@@ -8,15 +9,15 @@ def leer_pdf(ruta_pdf):
             texto = ""
             for pagina in lector.pages:
                 value = pagina.extract_text()
-                texto += """ {value} """
+                texto += value
         return texto
     except Exception as e:
         print(f"Error al leer el PDF: {e}")
         return ""
 
 value = leer_pdf('data/factura-4.pdf')
-
 print(value)
+
 # Conectarse a Ollama
 client = openai.Client(
     base_url="http://localhost:11434/v1",
@@ -26,9 +27,9 @@ client = openai.Client(
 response = client.chat.completions.create(
     model="deepseek-r1:1.5b",
     messages=[{"role": "user", "content": """
-               Extract : iva, total, subtotal, items and client
+               Extract : iva
                from this text in json format: \n{value}"""}],
     temperature=0.7
 )
 
-print(response.choices[0].message['content'])
+print(json.dumps(response, indent=4))
