@@ -23,8 +23,8 @@ client = openai.Client(
 
 response = client.chat.completions.create(
     model="deepseek-r1:1.5b",  # Reemplazá 1.5b con la versión elegida
-    messages=[{"role": "user", "content": "Extract iva, total, subtotal, items and client from this text: {value}"}],
+    messages=[{"role": "user", "content": "Extract : iva, total, subtotal, items and client from this text: {value} in json forma"}],
     temperature=0.7
 )
 
-print(response)
+print(response.message)
