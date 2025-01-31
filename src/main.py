@@ -27,9 +27,9 @@ client = openai.Client(
 response = client.chat.completions.create(
     model="deepseek-r1:1.5b",
     messages=[{"role": "user", "content": """
-               Extract : iva
-               from this text in json format: \n{value}"""}],
+               Extract : iva value
+               from this invoice text in json format: \n{value}"""}],
     temperature=0.7
 )
 
-print(json.dumps(response, indent=4))
+print(response)
